@@ -1,24 +1,94 @@
-# README
+# Database Planning
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## User
+### Fields
+- name STRING, :presence, format: /[a-zA-Z0-9]+/
+- username STRING, :uniqueness, :presence, format: /^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$/
+- email STRING, :uniqueness, :presence
+- 
 
-Things you may want to cover:
+### Associations
+To request friends
+- has_many :friendships, dependent: :destroy
+- has_many :friends, through: :friendships
 
-* Ruby version
+To let it work the other way
+- has_many :received_friendships, class_name: 'Friendship', foreign_key: 'friend_id'
+- has_many :received_friends, through: :received_friendships, source: 'User'
 
-* System dependencies
+You also need the helper methods mentioned [here](https://stackoverflow.com/questions/49213989/implement-a-friendship-model-with-has-and-belongs-to-many-in-rails), you can read through and figure them out again when you come to it since you're basically just googling and copying
 
-* Configuration
+has_many :posts
+has_many :likes
+has_many :comments
+has_many :notifications
+has_one_attached :avatar
 
-* Database creation
+## Friendship
+### Fields
+- user_id FOREIGN_KEY, :presence, check user isn't friending themselves (custom private method), and that they aren't already friends with the other person
+- friend_id FOREIGN_KEY, :presence
+- accepted BOOLEAN
+- timestamps DATETIME (make sure they're created so I can see how long two Users have been friends using the edit date)
 
-* Database initialization
+### Associations
+- belongs_to :user
+- belongs_to :friend, class_name: "User"
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+## TextPost
+### Fields
+- body STRING
+- user FOREIGN_KEY
 
-* Deployment instructions
+### Associations
+- has_many :comments, as: commentable
+- has_many :likes, as: :likeable
+- belongs_to :user
 
-* ...
+
+## ImagePost
+### Fields
+- body STRING
+- user FOREIGN_KEY
+
+### Associations
+- has_many :comments, as: commentable
+- has_many :likes, as: :likeable
+- has_many_attached :images
+- belongs_to :user
+
+
+## Comments (polymorphic on posts and comments)
+### Fields
+- body STRING, :presence
+- commentable_id FOREIGN_KEY, :presence
+- commentable_type STRING
+- user FOREIGN_KEY, :presence
+
+### Associations
+belongs_to :user
+belongs_to :commentable, polymorphic: :true
+has_many :comments, as: :commentable
+has_many :likes, as: :likeable
+
+
+## Notifications
+### Fields
+- text STRING
+- link STRING
+- user FOREIGN_KEY
+
+### Associations
+- belongs_to :user
+
+
+## Likes (polymorphic on posts and comments)
+### Fields
+- user FOREIGN_KEY
+- likeable_id FOREIGN KEY
+- likeable_type STRING
+
+### Associations
+- belongs_to :user
+- belongs_to :likeable, polymorphic: :true
