@@ -5,7 +5,9 @@
 - name STRING, :presence, format: /[a-zA-Z0-9]+/
 - username STRING, :uniqueness, :presence, format: /^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$/
 - email STRING, :uniqueness, :presence
-- 
+- birthday DATE, comparison: {less_than: Date.now - 18.years, message: "You must be 18 to use this site"}
+- gender STRING (use a select box to submit this)
+- devise stuff
 
 ### Associations
 To request friends
@@ -36,18 +38,7 @@ has_one_attached :avatar
 - belongs_to :friend, class_name: "User"
 
 
-## TextPost
-### Fields
-- body STRING
-- user FOREIGN_KEY
-
-### Associations
-- has_many :comments, as: commentable
-- has_many :likes, as: :likeable
-- belongs_to :user
-
-
-## ImagePost
+## Post
 ### Fields
 - body STRING
 - user FOREIGN_KEY
@@ -59,7 +50,7 @@ has_one_attached :avatar
 - belongs_to :user
 
 
-## Comments (polymorphic on posts and comments)
+## Comment
 ### Fields
 - body STRING, :presence
 - commentable_id FOREIGN_KEY, :presence
@@ -73,7 +64,7 @@ has_many :comments, as: :commentable
 has_many :likes, as: :likeable
 
 
-## Notifications
+## Notification
 ### Fields
 - text STRING
 - link STRING
@@ -83,7 +74,7 @@ has_many :likes, as: :likeable
 - belongs_to :user
 
 
-## Likes (polymorphic on posts and comments)
+## Like
 ### Fields
 - user FOREIGN_KEY
 - likeable_id FOREIGN KEY
