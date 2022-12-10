@@ -3,7 +3,7 @@
 ## User
 ### Fields
 - name STRING, :presence, format: /[a-zA-Z0-9]+/
-- username STRING, :uniqueness, :presence, format: /^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$/
+- username STRING, :uniqueness, :presence
 - email STRING, :uniqueness, :presence
 - birthday DATE, comparison: {less_than: Date.now - 18.years, message: "You must be 18 to use this site"}
 - gender STRING (use a select box to submit this)
