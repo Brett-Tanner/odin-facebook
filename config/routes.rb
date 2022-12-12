@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :users
 
-  # Defines the root path route ("/")
-  root "posts#index"
+  # Defines the root path route ("/"), requring login if not logged in
+  authenticated :user do
+    root to: "users#index", as: :authenticated_root
+  end
+  root to: redirect("/users/sign_in")
 end
