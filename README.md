@@ -21,6 +21,7 @@ To let it work the other way
 You also need the helper methods mentioned [here](https://stackoverflow.com/questions/49213989/implement-a-friendship-model-with-has-and-belongs-to-many-in-rails), you can read through and figure them out again when you come to it since you're basically just googling and copying
 
 has_many :posts
+has_many :images
 has_many :likes
 has_many :comments
 has_many :notifications
@@ -38,16 +39,31 @@ has_one_attached :avatar
 - belongs_to :friend, class_name: "User"
 
 
+<!-- TODO: I'm using ActionText for this -->
 ## Post
 ### Fields
 - body STRING
 - user FOREIGN_KEY
 
 ### Associations
-- has_many :comments, as: commentable
+- has_many :comments, as: :commentable
 - has_many :likes, as: :likeable
 - has_many_attached :images
 - belongs_to :user
+
+
+<!-- TODO: I'm using ActiveStorage for these -->
+## Image
+### Fields
+- the image itself
+- any AS metadata
+- user FOREIGN_KEY, :presence
+
+### Associations
+belongs_to :user
+belongs_to :commentable, polymorphic: :true
+has_many :comments, as: :commentable
+has_many :likes, as: :likeable
 
 
 ## Comment
