@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :users
+  authenticate :user do
+    resources :users
+  end
 
   # Defines the root path route ("/"), requring login if not logged in
   authenticated :user do

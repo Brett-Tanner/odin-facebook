@@ -1,0 +1,5 @@
+<%= "You are signed in as #{current_user.name}" %>
+
+<% @users.each do |user| %>
+    <%= render partial: "preview", locals: {user: user} %>
+<% end %>
