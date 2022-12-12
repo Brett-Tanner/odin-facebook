@@ -14,7 +14,7 @@ User.create([
     username: "bloodISwater",
     gender: "Female",
     birthday: "2008-12-1",
-    email: "female_master@hawky.com",
+    email: "hair_loops@hawky.com",
     password: "sokkashairsux"
   },
   {

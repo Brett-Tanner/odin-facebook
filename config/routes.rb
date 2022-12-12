@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
+  resources :friendships
   devise_for :users
   authenticate :user do
     resources :users
+    resources :friend_requests
   end
 
   # Defines the root path route ("/"), requring login if not logged in
