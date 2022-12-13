@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'faker'
 
-RSpec.describe 'Friendship' do
+RSpec.describe 'Friendship', type: :model do
 
   let(:user) {User.create(
     name: Faker::Name.name,

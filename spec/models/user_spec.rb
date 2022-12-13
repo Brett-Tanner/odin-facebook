@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'User' do
+RSpec.describe 'User', type: :model do
   context "when valid" do
     it "saves" do
       valid_user = User.new(

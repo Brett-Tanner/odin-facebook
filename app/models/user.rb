@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  has_many :notifications
+
+  # Friendship associations
   has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships
   has_many :received_friendships, class_name: 'Friendship', 
