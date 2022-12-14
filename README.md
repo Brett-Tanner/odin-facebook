@@ -42,7 +42,7 @@ has_one_attached :avatar
 <!-- TODO: I'm using ActionText for this -->
 ## Post
 ### Fields
-- body STRING
+- content, but as Action Text association rather than a field
 - user FOREIGN_KEY
 
 ### Associations
