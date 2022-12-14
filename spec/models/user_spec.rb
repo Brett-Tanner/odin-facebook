@@ -7,6 +7,42 @@ RSpec.describe 'User', type: :model do
       valid = valid_user.save
       expect(valid).to be true
     end
+
+    it "saves names with spaces" do
+      valid_user = build(:user, name: "Bill Smith")
+      valid = valid_user.save
+      expect(valid).to be true
+    end
+
+    it "saves names with titles" do
+      valid_user = build(:user, name: "Dr. Bill Smith")
+      valid = valid_user.save
+      expect(valid).to be true
+    end
+
+    it "saves names with apostrophes" do
+      valid_user = build(:user, name: "Dr. Bill O'Connor")
+      valid = valid_user.save
+      expect(valid).to be true
+    end
+
+    it "saves usernames with underscores" do
+      valid_user = build(:user, username: "xx_no_scope_xx")
+      valid = valid_user.save
+      expect(valid).to be true
+    end
+
+    it "saves usernames with ." do
+      valid_user = build(:user, username: "the.best")
+      valid = valid_user.save
+      expect(valid).to be true
+    end
+
+    it "saves usernames with numbers" do
+      valid_user = build(:user, username: "69nice69")
+      valid = valid_user.save
+      expect(valid).to be true
+    end
   end
 
   context "when invalid" do
@@ -16,10 +52,15 @@ RSpec.describe 'User', type: :model do
       expect(valid).to be false
     end
 
-    # FIXME: not passing cos the validation doesn't work
-    xit "doesn't save with invalid name" do
+    it "doesn't save with invalid name" do
       invalid_name = build(:user, name: "A$^^^(&=")
       valid = invalid_name.save
+      expect(valid).to be false
+    end
+
+    it "doesn't save with invalid username" do
+      invalid_username = build(:user, username: "A$^^^(&=")
+      valid = invalid_username.save
       expect(valid).to be false
     end
 
