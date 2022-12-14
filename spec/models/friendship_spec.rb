@@ -3,22 +3,8 @@ require 'faker'
 
 RSpec.describe 'Friendship', type: :model do
 
-  let(:user) {User.create(
-    name: Faker::Name.name,
-    username: Faker::Internet.unique.username,
-    gender: "Male",
-    birthday: Faker::Date.birthday(min_age: 10, max_age: 50),
-    email: Faker::Internet.unique.email,
-    password: Faker::Internet.password(min_length: 10)
-  )}
-  let(:friend) {User.create(
-    name: Faker::Name.name,
-    username: Faker::Internet.unique.username,
-    gender: "Male",
-    birthday: Faker::Date.birthday(min_age: 10, max_age: 50),
-    email: Faker::Internet.unique.email,
-    password: Faker::Internet.password(min_length: 10)
-  )}
+  let(:user) {create(:user)}
+  let(:friend) {create(:user, id: 2)}
 
   context "when valid" do
     it "makes a request" do

@@ -16,6 +16,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :omniauthable
 
   validates :name, :username, :birthday, presence: true
+  # FIXME: does something now, but not the right thing
+  # validates :name, format: {with: /\A[a-zA-Z\d ]*\z/i, message: "Only letters and number can be used"}
   validates :username, uniqueness: true
   validates :gender, inclusion: {in: ["Male", "Female", "Prefer not to say"]}
   validates :birthday, comparison: {less_than: Date.today - 10.years}

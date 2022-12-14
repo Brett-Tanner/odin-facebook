@@ -2,24 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Notification, type: :model do
   context "when valid" do
-    let(:user) {User.create(
-      id: 1,
-      name: Faker::Name.name,
-      username: Faker::Internet.unique.username,
-      gender: "Male",
-      birthday: Faker::Date.birthday(min_age: 10, max_age: 50),
-      email: Faker::Internet.unique.email,
-      password: Faker::Internet.password(min_length: 10)
-    )}
-    let(:friend) {User.create(
-      id: 2,
-      name: Faker::Name.name,
-      username: Faker::Internet.unique.username,
-      gender: "Male",
-      birthday: Faker::Date.birthday(min_age: 10, max_age: 50),
-      email: Faker::Internet.unique.email,
-      password: Faker::Internet.password(min_length: 10)
-    )}
+    let(:user) {create(:user)}
+    let(:friend) {create(:user, id: 2)}
 
     subject {user.notifications.new(
       text: "You have a notification about something!",

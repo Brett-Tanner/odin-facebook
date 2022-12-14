@@ -1,15 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  let(:user) {User.create(
-    id: 1,
-    name: Faker::Name.name,
-    username: Faker::Internet.unique.username,
-    gender: "Male",
-    birthday: Faker::Date.birthday(min_age: 10, max_age: 50),
-    email: Faker::Internet.unique.email,
-    password: Faker::Internet.password(min_length: 10)
-  )}
+  let(:user) {create(:user)}
 
   context "when valid" do
     it "saves" do
