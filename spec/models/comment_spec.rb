@@ -4,11 +4,11 @@ RSpec.describe Comment, type: :model do
   let(:post) {create(:post)}
   let(:comment) {create(:comment)}
   let(:commenter) {create(:user)}
+  let(:valid_post_comment) {post.comments.new(body: Faker::Quotes::Shakespeare.hamlet_quote, user: commenter)}
 
   context "when valid" do
     it "can comment on Post" do
-      valid_comment = post.comments.new(body: Faker::Quotes::Shakespeare.hamlet_quote, user: commenter)
-      valid = valid_comment.save
+      valid = valid_post_comment.save
       expect(valid).to be true
     end
 
@@ -16,6 +16,11 @@ RSpec.describe Comment, type: :model do
       valid_comment = post.comments.create(body: Faker::Quotes::Shakespeare.hamlet_quote, user: commenter)
       listed = post.comments.include?(valid_comment)
       expect(listed).to be true
+    end
+
+    it "can show which Post was commented on" do
+      commented_post = valid_post_comment.commentable
+      expect(commented_post).to be post
     end
 
     it "can comment on Comment" do
@@ -30,6 +35,12 @@ RSpec.describe Comment, type: :model do
       expect(listed).to be true
     end
 
+    it "can show which Comment was commented on" do
+      valid_comment = comment.comments.new(body: Faker::Quotes::Shakespeare.hamlet_quote, user: commenter)
+      commented_comment = valid_comment.commentable
+      expect(commented_comment).to be comment
+    end
+
     it "can comment on same thing multiple times" do
       10.times do
         comment.comments.create(body: Faker::Quotes::Shakespeare.hamlet_quote, user: create(:user))
@@ -38,7 +49,7 @@ RSpec.describe Comment, type: :model do
       expect(comment_count).to eq 10
     end
 
-    it "can list comments from a user" do
+    it "can list comments from a User" do
       10.times do
         comment.comments.create(body: Faker::Quotes::Shakespeare.hamlet_quote, user: commenter)
       end

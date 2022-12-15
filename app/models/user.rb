@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_many :notifications
   has_many :posts
   has_many :comments
+  has_many :likes
 
   # Friendship associations
   has_many :friendships, dependent: :destroy
