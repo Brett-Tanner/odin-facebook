@@ -1,7 +1,8 @@
 FactoryBot.define do
   factory :notification do
+    id { |n| n }
     text { "MyString" }
     link { "MyString" }
-    user { nil }
+    user { create(:user) }
   end
 end

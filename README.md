@@ -79,6 +79,7 @@ belongs_to :commentable, polymorphic: :true
 has_many :comments, as: :commentable
 has_many :likes, as: :likeable
 
+<!-- Make sure you can comment on comments -->
 
 ## Notification
 ### Fields
@@ -92,7 +93,7 @@ has_many :likes, as: :likeable
 
 ## Like
 ### Fields
-- user FOREIGN_KEY
+- user FOREIGN_KEY, validate that it's unique in the scope of this particular likeable thing
 - likeable_id FOREIGN KEY
 - likeable_type STRING
 
